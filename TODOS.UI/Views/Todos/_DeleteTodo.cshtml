@@ -1,0 +1,44 @@
+﻿@model TODOS.UI.Models.ToDoItemModel
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteTodoModal" tabindex="-1" aria-labelledby="deleteTodoModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger-light fle">
+                <h5 class="modal-title" id="deleteTodo">Are you sure you want to delete this Todo?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-light center-content">
+
+                <div class="col-sm-10 center-content">
+                    <h5 id="title" name="title" class="col-sm-10">
+                        @Html.DisplayFor(model => model.title)
+                    </h5>
+                </div>
+                <div id="content" class="col-sm-10 margin">
+                    @Html.DisplayFor(model => model.content)
+                </div>
+                <div>
+                    <form asp-action="_DeleteTodo">
+                        <input id="id" type="hidden" asp-for="id" class="form-control" />
+                        <input id="lastModified" type="hidden" asp-for="lastModified" class="form-control" />
+                        <input id="title" type="hidden" asp-for="title" class="form-control" />
+                        <input id="content" type="hidden" asp-for="content" class="form-control" />
+                        <div class="form-group">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"> Close </button>
+                            <button id="deleteButton" type="submit" class="btn btn-danger" data-save="modal" aria-label="Delete"
+                                    data-url="@Url.Action("_DeleteTodo", "Home", new { id = Model.id })"
+                                    data-id="@Model.id">
+                                Delete
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

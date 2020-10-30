@@ -1,0 +1,18 @@
+﻿@model List<TODOS.UI.Models.ToDoItemModel>
+
+@{
+    ViewData["Title"] = "To-Dos App";
+}
+
+
+<div id="main-container" class="text-center">
+
+    <div class="todos-list">
+
+        <partial name="_TodosList" />
+
+        @{ await Html.RenderPartialAsync("_AddTodo", new ToDoItemModel()); }
+
+    </div>
+
+</div>

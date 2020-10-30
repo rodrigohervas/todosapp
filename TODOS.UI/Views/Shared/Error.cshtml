@@ -1,0 +1,12 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+    <div class="alert alert-danger error-container" role="alert">
+        <div class="error-internal-container">
+            <h3 class="text-danger">Oops, something went wrong.</h3>
+            <h5 class="text-black-50">Please try again.</h5>
+            <a asp-controller="Todos" asp-action="Index">Go Back</a>
+        </div>
+    </div>

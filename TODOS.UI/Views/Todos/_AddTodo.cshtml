@@ -1,0 +1,42 @@
+﻿@model TODOS.UI.Models.ToDoItemModel
+
+@{
+    ViewData["Title"] = "AddTodo";
+}
+
+
+
+<!-- Create Modal -->
+<div class="modal fade" id="addTodoModal" tabindex="-1" aria-labelledby="addTodoModal" aria-hidden="true" novalidate>
+    <div class="modal-dialog rounded-lg">
+        <div class="modal-content rounded-lg">
+            <div class="modal-header bg-success-light">
+                <h5 class="modal-title" id="addTodo">Add a Todo:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-light">
+                <form asp-controller="Todos" asp-action="_AddTodo">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="id" class="form-control" value="00000000-0000-0000-0000-000000000000" />
+                    <input type="hidden" asp-for="lastModified" class="form-control" value="1/1/0001 12:00:00 AM" />
+                    <div class="form-group">
+                        <label asp-for="title" class="control-label col-sm-12 form-label">Title:</label>
+                        <input asp-for="title" class="form-control" required />
+                        <span asp-validation-for="title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="content" class="control-label col-sm-12 form-label">Content:</label>
+                        <textarea id="content" asp-for="content" class="form-control" rows="3" required></textarea>
+                        <span asp-validation-for="content" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Cancel"> Cancel </button>
+                        <button type="submit" class="btn btn-primary" data-save="modal" aria-label="Create"> Create </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

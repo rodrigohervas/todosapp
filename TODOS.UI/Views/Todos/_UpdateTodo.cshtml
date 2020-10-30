@@ -1,0 +1,39 @@
+﻿@model TODOS.UI.Models.ToDoItemModel
+
+<!-- Update Modal -->
+<div class="modal fade" id="updateTodoModal" tabindex="-1" aria-labelledby="updateTodoModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-light">
+                <h5 class="modal-title" id="updateTodo">Update Todo:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-light">
+
+                <form asp-action="_UpdateTodo">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input id="id" type="hidden" asp-for="id" class="form-control" />
+                    <input id="lastModified" type="hidden" asp-for="lastModified" class="form-control" />
+                    <div class="form-group">
+                        <label asp-for="title" class="control-label col-sm-12 form-label">Title:</label>
+                        <input id="title" asp-for="title" class="form-control" required />
+                        <span asp-validation-for="title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="content" class="control-label col-sm-12 form-label">Content:</label>
+                        <textarea id="content" asp-for="content" class="form-control" rows="3" required></textarea>
+                        <span asp-validation-for="content" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Close </button>
+                        <button type="submit" class="btn btn-primary" data-save="modal" aria-label="Update"> Update </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
