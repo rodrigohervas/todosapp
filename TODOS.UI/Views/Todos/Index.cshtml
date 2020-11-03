@@ -7,11 +7,11 @@
 
 <div id="main-container" class="text-center">
 
-    <div class="todos-list">
+    <div class="todos-list" data-url="@Url.Action("Index", "Todos")">
 
-        <partial name="_TodosList" />
-
-        @{ await Html.RenderPartialAsync("_AddTodo", new ToDoItemModel()); }
+        <partial name="_TodosList"  />
+        
+        @*@{ await Html.RenderPartialAsync("_AddTodo", new ToDoItemModel()); }*@
 
     </div>
 

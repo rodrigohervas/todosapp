@@ -22,6 +22,7 @@
                 </div>
                 <div>
                     <form asp-action="_DeleteTodo">
+                        <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
                         <input id="id" type="hidden" asp-for="id" class="form-control" />
                         <input id="lastModified" type="hidden" asp-for="lastModified" class="form-control" />
                         <input id="title" type="hidden" asp-for="title" class="form-control" />
