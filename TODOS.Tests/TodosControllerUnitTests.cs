@@ -82,7 +82,7 @@ namespace TODOS.Tests.UnitTests
 
         //[HttpGet] - public IActionResult _AddTodo()
         [Fact]
-        public void _AddTodo_Creates_one_Todo_And_Redirects_to_Index()
+        public void _AddTodo_Creates_one_Todo_And_Returns_PartialView()
         {
             var todo = todosList.First();
 
@@ -96,8 +96,11 @@ namespace TODOS.Tests.UnitTests
             var result = controller._AddTodo(todo);
 
             //Assert the result
-            Assert.NotNull(result);
-            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);            
+            var partialViewResult = Assert.IsType<PartialViewResult>(result);
+            var model = partialViewResult.Model;
+
+            //Assert the model
+            model.Should().BeEquivalentTo(todo, options => options.ComparingByMembers<ToDoItemModel>());
         }
 
         //[HttpGet] - public IActionResult _UpdateTodo(Guid id)
@@ -126,7 +129,7 @@ namespace TODOS.Tests.UnitTests
 
         //[HttpPost] - public IActionResult _UpdateTodo([FromForm] ToDoItemModel todoItem)
         [Fact]
-        public void _UpdateTodo_Updates_one_Todo_And_Redirects_To_Index()
+        public void _UpdateTodo_Updates_one_Todo_And_Returns_A_PartialView()
         {
             var todo = todosList.First();
 
@@ -140,8 +143,11 @@ namespace TODOS.Tests.UnitTests
             var result = controller._UpdateTodo(todo);
 
             //Assert the result
-            Assert.NotNull(result);
-            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
+            var partialViewResult = Assert.IsType<PartialViewResult>(result);
+            var model = partialViewResult.Model;
+
+            //Assert the model
+            model.Should().BeEquivalentTo(todo, options => options.ComparingByMembers<ToDoItemModel>());
         }
 
 
@@ -172,7 +178,7 @@ namespace TODOS.Tests.UnitTests
 
         //[HttpPost] - public IActionResult _DeleteTodo([FromForm] ToDoItemModel todoItem)
         [Fact]
-        public void _DeleteTodo_Deletes_one_Todo_And_Redirects_To_Index()
+        public void _DeleteTodo_Deletes_one_Todo_And_Returns_PartialView()
         {
             var todo = todosList.First();
 
@@ -186,8 +192,11 @@ namespace TODOS.Tests.UnitTests
             var result = controller._DeleteTodo(todo);
 
             //Assert the result
-            Assert.NotNull(result);
-            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
+            var partialViewResult = Assert.IsType<PartialViewResult>(result);
+            var model = partialViewResult.Model;
+
+            //Assert the model
+            model.Should().BeEquivalentTo(todo, options => options.ComparingByMembers<ToDoItemModel>());
         }
 
     }
