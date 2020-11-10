@@ -1,78 +1,63 @@
 ﻿
+
 /**
  * Functions executed on document.ready()
  */
 $(document).ready(function () {
 
+    //get the placeholder div for the modals
+    var placeHolderElement = $('#modal-placeholder');
+
     /**
-     * sets the modal body content, on modal load, for the Add Modal
-     * called from the Add button in _TodosList
+     * add eventListener to modal open buttons to handle click events
+     * using $(document).on() makes sure that the event handler for the modal open buttons binds again after replacing the cards for the updated ones
      */
-    $('#addTodoModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Get button that triggered the modal
-        var url = button.data('url') // Extract info from data-url
-
-        $.get(url, function (_View) {
-            $('.modal-body').html($(_View).find(".modal-body").html()); //load html into modal body
+    $(document).on('click', 'button[data-toggle="ajax-modal"]', function (event) {
+        var url = $(this).data('url');
+        $.get(url).done(function (data) {
+            placeHolderElement.html(data);
+            placeHolderElement.find('.modal').modal('show');
         });
     });
 
     /**
-    * sets the modal body content, on modal load, for the Details Modal
-    * called from the Details button in _TodosList
-    */
-    $('#detailsTodoModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Get button that triggered the modal
-        var url = button.data('url') // Extract info from data-url
-        SetModalContent(url);
-    });
+     * add eventListener to modal-save buttons to handle click events
+     * to process modal form action attach onclick eventhandler to the submit button of the loaded modal
+     */
+    placeHolderElement.on('click', '[data-save="modal"]', function (event) {
+        //prevent request to be sent to server
+        event.preventDefault();
 
-    /**
-    * sets the modal body content, on modal load, for the Update Modal
-    * called from the Update button in _TodosList
-    */
-    $('#updateTodoModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Get button that triggered the modal
-        var url = button.data('url') // Extract info from data-url
-        SetModalContent(url);
-    });
+        //manage request via jQuery
+        var form = $(this).parents('.modal').find('form');
+        var actionUrl = form.attr('action');
+        var dataToSend = form.serialize();
 
-    /**
-    * sets the modal body content, on modal load, for the Delete Modal
-    * called from the Delete button in _TodosList
-    */
-    $('#deleteTodoModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Get button that triggered the modal
-        var url = button.data('url') // Extract info from data-url
-        SetModalContent(url);
-    });
+        /**
+         * send request to controller action
+         */
+        $.post(actionUrl, dataToSend).done(function (data) {
+            //show response on modal new body
+            var newBody = $('.modal-body', data);
+            placeHolderElement.find('.modal-body').replaceWith(newBody);
 
-    /**
-    * gets and sets the html content into a modal-body div
-    */
-    function SetModalContent(url) {
-        $.get(url, function (_View) {
-            $('.modal-body').html($(_View).find(".modal-body").html());
+            //hide modal if no errors in response (if hidden IsValid input is true)
+            var isValid = newBody.find('[name="IsValid"]').val() == 'True';
+            if (isValid) {
+                //hide modal placeholder
+                placeHolderElement.find('.modal').modal('hide');
+
+                //get the url to request all todos
+                var todosUrl = $('#main-container').find('.todos-list').data('url');
+                /**
+                 * get all todos from controller to refresh cards
+                 */
+                $.get(todosUrl).done(function (_View) {
+                    var todosList = $('#main-container', _View).find('.todoCardsContainer').html();
+                    $('.todoCardsContainer').html(todosList);
+                });
+            }
         });
-    };
-
-    /**
-    * sets the onclick functionality for the Delete button in _TodosList partial view:
-    * - calls TodosController._DeleteTodo() with a jQuery post request, then 
-    * - hides the _DeleteTodo modal
-    * called from the Delete button in _TodosList
-    */
-    $('#deleteTodoModal').on('click', '#deleteButton', function (event) {
-        var $modalDiv = $(event.delegateTarget); // deleteModal div
-        var url = $(this).data('url'); // Extract info from data-url
-        var id = $modalDiv.find("#id").val();
-
-        var item = { "id": id };
-
-        $.post(url, item)
-            .then(function (resp) {
-                $modalDiv.modal('hide');
-            });
-    });
-
+    });    
 });
+

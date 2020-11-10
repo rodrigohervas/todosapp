@@ -13,6 +13,7 @@
             <div class="modal-body bg-light">
 
                 <form asp-action="_UpdateTodo">
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input id="id" type="hidden" asp-for="id" class="form-control" />
                     <input id="lastModified" type="hidden" asp-for="lastModified" class="form-control" />
@@ -28,7 +29,7 @@
                     </div>
                     <div class="form-group">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"> Close </button>
-                        <button type="submit" class="btn btn-primary" data-save="modal" aria-label="Update"> Update </button>
+                        <button type="submit" class="btn btn-primary" data-save="modal" aria-label="Update" > Update </button>
                     </div>
                 </form>
 

@@ -149,7 +149,7 @@ namespace TODOS.UI.Controllers
                     _logger.LogInformation($"TodosController._AddTodo - Post: Modelstate Invalid.");
                 }
 
-                return RedirectToAction("Index");
+                return PartialView("_AddTodo", todoItem);
                 
             }
             catch (Exception ex)
@@ -216,7 +216,7 @@ namespace TODOS.UI.Controllers
                     _logger.LogInformation($"TodosController._UpdateTodo - Post: Modelstate Invalid.");
                 }
 
-                return RedirectToAction("Index");
+                return PartialView("_UpdateTodo", todoItem);
             }
             catch (Exception ex)
             {
@@ -280,7 +280,7 @@ namespace TODOS.UI.Controllers
                     _logger.LogInformation($"TodosController._DeleteTodo - Post: Modelstate Invalid.");
                 }
 
-                return RedirectToAction("Index");
+                return PartialView("_DeleteTodo", todoItem);
             }
             catch (Exception ex)
             {
