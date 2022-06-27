@@ -5,7 +5,7 @@ ASP.NET Core 3.1 web application to CRUD To-dos
 
 ## Description: 
 
-TODOS App is an ASP.NET Core 3.1 web application to create, read, update and delete To-dos form a json local file.
+TODOS App is an ASP.NET Core 3.1 web application to create, read, update and delete To-dos from a json local file.
 
 
 ## Technologies used: 
